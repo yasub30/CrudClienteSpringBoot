@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light fw-bold" href="#">SPRING BOOT MVC-H2"</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link text-light fw-bolder active" aria-current="page" href="#">Inicio</a>
+                    <a class="nav-link text-light fw-bolder" th:href="@{/listar}">Clientes</a>
+                    <a class="nav-link text-light tdisabled">Disabled</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Mantenimiento de Clientes</h1>
+        <div th:object="${cliente}" th:remove="tag">
+            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+        <form th:action="@{/form}" th:object="${cliente}" method="post">
+            <div class="row mb-3">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre</label>
+                <div class="col-sm-10">
+                    <input type="text" th:field="*{nombre}" class="form-control" required
+                           th:errorclass="form-control alert-danger" id="inputEmail3"/>
+                    <small class="form-text text-danger"
+                        th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Apellidos</label>
+                <div class="col-sm-10">
+                    <input type="text" th:field="*{apellido}" class="form-control" required
+                           th:errorclass="form-control alert-danger" id="inputPassword3">
+                    <small class="form-text text-danger"
+                           th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Correo</label>
+                <div class="col-sm-10">
+                    <input type="email" th:field="*{correo}" class="form-control" required
+                           th:errorclass="form-control alert-danger" id="inputPassword4">
+                    <small class="form-text text-danger"
+                        th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Teléfono</label>
+                <div class="col-sm-10">
+                    <input type="text" maxlength="9" th:field="*{telefono}" class="form-control"
+                           th:errorclass="form-control alert-danger" id="inputPassword5" required>
+                    <small class="form-text text-danger"
+                        th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="${textbtn}">Crear</button>
+        </form>
+    </div>
+</body>
+</html>
